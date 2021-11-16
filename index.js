@@ -183,6 +183,22 @@ async function getNpmLicenses() {
         });
 }
 
+function applyOverrides(outputDir, licenseInfos) {
+      var userOverridesPath = path.join(outputDir, 'overrides.json');
+      if (jetpack.exists(userOverridesPath)) {
+          var userOverrides = jetpack.read(userOverridesPath, 'json');
+          console.log('using overrides', userOverrides);
+          for (const key of Object.getOwnPropertyNames(userOverrides)) {
+              const licenseInfo = licenseInfos.find(licenseInfo => licenseInfo.name == key);
+              if (licenseInfo) {
+                  const override = userOverrides[key];
+                  Object.assign(licenseInfo, override);
+              } else {
+                  licenseInfo.push(override);
+              }
+          }
+      }
+}
 
 /***********************
  *
@@ -208,15 +224,16 @@ taim('Total Processing',
         console.log(err);
         process.exit(1);
     })
-  .then((licenseInfos) => {
-      var attributionSequence = sortBy(licenseInfos, licenseInfo => licenseInof.name.toLowerCase)
-        .filter(licenseInfo => {
-            return !licenseInfo.ignore && licenseInfo.name != undefined;
-        })
-        .map(licenseInfo => {
-            return [licenseInfo.name,`${licenseInfo.version} <${licenseInfo.url}>`,
-                    licenseInfo.licenseText || `license: ${licenseInfo.license}${os.EOL}authors: ${licenseInfo.authors}`].join(os.EOL);
-        });
+    .then((licenseInfos) => {
+        applyOverrides(options.outputDir, licenseInfos);
+        var attributionSequence = sortBy(licenseInfos, licenseInfo => licenseInfo.name.toLowerCase)
+            .filter(licenseInfo => {
+                return !licenseInfo.ignore && licenseInfo.name != undefined;
+            })
+            .map(licenseInfo => {
+                return [licenseInfo.name,`${licenseInfo.version} <${licenseInfo.url}>`,
+                        licenseInfo.licenseText || `license: ${licenseInfo.license}${os.EOL}authors: ${licenseInfo.authors}`].join(os.EOL);
+            });
 
         var attribution = attributionSequence.join(`${os.EOL}${os.EOL}******************************${os.EOL}${os.EOL}`);
 
