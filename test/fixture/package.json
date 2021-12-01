@@ -12,7 +12,6 @@
     "messageformat": "2.3.0",
     "rxjs": "6.6.3",
     "uuid": "8.3.2"
-
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.2.8"

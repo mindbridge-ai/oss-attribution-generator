@@ -31,4 +31,23 @@ describe('end to end', () => {
     it('includes transitive dependencies', () => {
         assert('tslib' in licenseInfos);
     });
+
+    it('returns a particular structure', () => {
+        for (const item of Object.values(licenseInfos)) {
+            for (const key of ['name', 'version', 'authors', 'license', 'licenseText', 'url']) {
+                if (item.name !== 'uuid' || key !== 'authors') {
+                    assert(key in item, `Expected ${key} for ${item['name']}`);
+                }
+            }
+        }
+    });
+
+    it('returns the correct data for rxjs', () => {
+        const rxjs = licenseInfos.rxjs;
+        assert(rxjs.version === '6.6.3');
+        assert(rxjs.authors === 'Ben Lesh <ben@benlesh.com>');
+        assert(rxjs.license === 'Apache-2.0');
+        assert(rxjs.licenseText.includes('Apache License'));
+        assert(rxjs.url === 'https://github.com/reactivex/rxjs');
+    });
 });
