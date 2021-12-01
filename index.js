@@ -245,7 +245,12 @@ taim('Total Processing',
             attribution = template + os.EOL + os.EOL + attribution;
         }
 
-        jetpack.write(path.join(options.outputDir, 'licenseInfos.json'), JSON.stringify(licenseInfos));
+        const outputLicenseInfos = {};
+        for (const license of licenseInfos) {
+            outputLicenseInfos[license.name] = license;
+        }
+
+        jetpack.write(path.join(options.outputDir, 'licenseInfos.json'), JSON.stringify(outputLicenseInfos));
 
         return jetpack.write(path.join(options.outputDir, 'attribution.txt'), attribution);
     })

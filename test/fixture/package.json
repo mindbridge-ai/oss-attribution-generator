@@ -1,0 +1,20 @@
+{
+  "name": "platform-clients",
+  "version": "4.1.0",
+  "license": "MIT",
+  "scripts": {
+    "test": "nx test"
+  },
+  "private": true,
+  "dependencies": {
+    "angular": "1.8.2",
+    "lodash.truncate": "4.4.2",
+    "messageformat": "2.3.0",
+    "rxjs": "6.6.3",
+    "uuid": "8.3.2"
+
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "12.2.8"
+  }
+}
