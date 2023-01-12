@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "fs-jetpack": "^0.12.0",
-    "license-checker": "^13.0.3",
+    "fs-jetpack": "^5.1.0",
+    "license-checker": "^25.0.1",
     "lodash.sortby": "^4.7.0",
-    "taim": "^1.0.2",
-    "yargs": "^7.0.2"
+    "taim": "^1.1.0",
+    "yargs": "^17.6.2"
   },
   "name": "oss-attribution-generator",
   "description": "utility to parse bower and npm packages used in a project and generate an attribution file to include in your product",
